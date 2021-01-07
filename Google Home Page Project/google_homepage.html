@@ -1,22 +1,52 @@
 <!DOCTYPE html>
-<html lang="en">
 <style>
-    h1 {
+    html {
+        height:100%;
+        width:100%;
+        margin:0px;
+        font-size: small;
+    }
+    body {
+        height:100%;
+        width:100%;
+        margin:0px;
+    }
+    h1, h2, h3 {
         margin: 0px;
     }
-    h2 {
-        margin: 0px;
+    h1 {
+        height:5%;
+
+    }
+    h2{
+        height:90%;
+        text-align:center;
     }
     h3 {
-        position:absolute;
-        bottom: 10px;
+        height:auto;
+        margin-top: 45px;
+        overflow:auto;
     }
-    div {
+    .left {
+        width:49%;
         margin:0px;
-        padding:0px;
-        float:left;
+        display:inline-block;
+    }
+    .right {
+        width:50%;
+        margin:0px;
+        text-align: right;
+        float:right;
+    }
+    img {
+        width: 25px;
+    }
+    div{
+        display:inline-block;
     }
 </style>
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,18 +56,23 @@
 <body>
 
 <h1 id="header">
-<div>About</div>
-<div>Store</div>
-<div>Gmail</div>
-<div>Images</div>
-<a href="#"><img src="https://img.icons8.com/android/48/000000/menu.png"></a>
-<a href="#"><img src="https://img.icons8.com/ios-filled/50/000000/circled.png"></a>
+    <div class="left">
+        <div>About</div>
+        <div>Store</div>
+    </div>
+    <div class="right">
+        <div>Gmail</div>
+        <div>Images</div>
+        <a href="#"><img src="https://img.icons8.com/android/48/000000/menu.png"></a>
+        <a href="#"><img src="https://img.icons8.com/ios-filled/50/000000/circled.png"></a>
+    </div>
+
 </h1>
 
 <h2 id="search">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" style="width:50%;">
+    <img style="width:auto; height:100px; margin-top: 150px;" src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg">
     <form>
-        <button type="submit"><img src="https://img.icons8.com/cotton/64/000000/detective.png"/></button>
+        <button type="submit"><img src="https://img.icons8.com/cotton/64/000000/detective.png"></button>
         <input type="text" id="search" required>
         <button type="submit">Google Search</button>
         <button type="submit">I'm Feeling Lucky</button>
@@ -45,13 +80,20 @@
 </h2>
 
 <h3 id="footer">
-    <div>Advertising</div>
-    <div>Business</div>
-    <div>How Search Works</div>
-    <div>Carbon neutral since 2007</div>
-    <div>Privacy</div>
-    <div>Terms</div>
-    <div>Settings</div>
+    <div class="left">
+        <div>Advertising</div>
+        <div>Business</div>
+        <div>How Search Works</div>        
+    </div>
+
+    <div style="position:absolute;">Carbon neutral since 2007</div>
+
+    <div class="right">
+        <div>Privacy</div>
+        <div>Terms</div>
+        <div>Settings</div>
+    </div>
+
 </h3>
 
 </body>
