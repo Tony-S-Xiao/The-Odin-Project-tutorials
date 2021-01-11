@@ -1,6 +1,6 @@
 html{
-    height:100%;
-    width:100%;
+    height:800px;
+    width:800px;
 }
 body {
     height:100%;
@@ -10,18 +10,17 @@ body {
 
 .row {
     margin:0px 0px 0px 0px;
-    height: calc(100% / 64);
-    overflow: hidden;
 }
 .column {
     margin:0px 0px 0px 0px;
     height: 100%;
-    width: calc(100% / 64);
+
     display:inline-block;
     overflow: hidden;
 }
 .colored {
     background-color: black;
+    color:black;
 }
 .uncolored {
     background-color: #d3d3d3;
