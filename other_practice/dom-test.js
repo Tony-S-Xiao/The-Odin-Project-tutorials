@@ -17,3 +17,11 @@ new_div.style.backgroundColor = 'pink';
 new_div.innerText = 'wow';
 
 container.appendChild(new_div);
+
+let header_1 = document.createElement('h1');
+header_1.innerText = 'I am a header!';
+let para_1 = document.createElement('p');
+para_1.innerText = 'I am a paragraph!';
+new_div.appendChild(para_1);
+new_div.appendChild(header_1);
+
