@@ -7,7 +7,7 @@ html {
 }
 body {
     position:absolute;
-    --size: 600px;
+    --size: 550px;
     display:inline-block;
     margin: 6px;
     padding: 6px;
@@ -32,7 +32,7 @@ body {
     background-color: black;
     border-radius: 10px;
     font-family: monospace;
-    font-size: 118px;
+    font-size: 100px;
     color:white;
 }
 #keyboard {
@@ -43,4 +43,23 @@ body {
     background-color: grey;
     border-radius: 20px;
 }
+.keyboardrow {
+    width: 100%;
+    height: calc(100%/6 - 2px - 2px);
+    margin: 1px;
+    padding: 1px;
+}
+.keyboarddigit{
+    width: calc(100%/5 - 2px - 2px);
+    height: calc(100% - 2px - 2px);
+    margin: 1px;
+    padding: 1px;
+    background-color: pink;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 100px;
+    color:white;
+    display:inline-block;
+}
+
 
