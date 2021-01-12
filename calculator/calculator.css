@@ -7,28 +7,40 @@ html {
 }
 body {
     position:absolute;
-    --size: 500px;
+    --size: 600px;
     display:inline-block;
     margin: 6px;
     padding: 6px;
     width: var(--size);
     height: calc(var(--size) * 1.6);
-    background-color: aquamarine;
+    background-color: lightblue;
     border-radius: 20px;
 }
 #display {
     width: calc(100% - 12px - 12px);
-    height: calc(20% - 12px - 12px);
+    height: calc(15% - 12px - 12px);
     margin: 6px;
     padding: 6px;
     background-color: grey;
     border-radius: 20px;
+}
+.displaydigit{
+    width: calc(100%/8 - 2px - 2px);
+    height: calc(100% - 2px - 2px);
+    margin: 1px;
+    padding: 1px;
+    background-color: black;
+    border-radius: 10px;
+    font-family: monospace;
+    font-size: 118px;
+    color:white;
 }
 #keyboard {
     width: calc(100% - 12px - 12px);
-    height: calc(80% - 12px - 12px);
+    height: calc(85% - 12px - 12px);
     margin: 6px;
     padding: 6px;
     background-color: grey;
     border-radius: 20px;
 }
+
