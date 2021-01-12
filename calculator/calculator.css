@@ -1,0 +1,34 @@
+html {
+    margin: 6px;
+    padding: 6px;
+    width: 100%;
+    height: 100%;
+    background-color: #F5F5F5;
+}
+body {
+    position:absolute;
+    --size: 500px;
+    display:inline-block;
+    margin: 6px;
+    padding: 6px;
+    width: var(--size);
+    height: calc(var(--size) * 1.6);
+    background-color: aquamarine;
+    border-radius: 20px;
+}
+#display {
+    width: calc(100% - 12px - 12px);
+    height: calc(20% - 12px - 12px);
+    margin: 6px;
+    padding: 6px;
+    background-color: grey;
+    border-radius: 20px;
+}
+#keyboard {
+    width: calc(100% - 12px - 12px);
+    height: calc(80% - 12px - 12px);
+    margin: 6px;
+    padding: 6px;
+    background-color: grey;
+    border-radius: 20px;
+}
