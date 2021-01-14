@@ -22,7 +22,7 @@ const keyboard_hardcoded_text =
  [10, '7'], [11, '8'], [12, '9'],  [13, '('],  [14, ')'],
  [15, '4'], [16, '5'], [17, '6'],  [18, '\u00D7'],  [19, '\u00F7'],
  [20, '1'], [21, '2'], [22, '3'],  [23, '\u002B'],  [24, '-'],
- [25, '0'], [26, '.'], [27, '(-)'],  [28, 'C'],  [29, '=']]);
+ [25, '0'], [26, '.'], [27, 'C'],  [28, '^'],  [29, '=']]);
 let to_populate = document.querySelectorAll('.keyboarddigit');
 let i = 0;
 for(let node of to_populate) {
@@ -48,10 +48,13 @@ class Display {
         this._window_start = 0;
         this._css_display = Array.from(document.querySelector('#display').querySelectorAll('.displaydigit'));
         this._cursor = 0;
+        this._display_on = true;
     }
     print() {
-        for(let i = 0; i < this._css_display.length; ++i) {
-            this._css_display[i].textContent = this._display[this._window_start + i];
+        if(this._display_on) {
+            for(let i = 0; i < this._css_display.length; ++i) {
+                this._css_display[i].textContent = this._display[this._window_start + i];
+            }            
         }
     }
     reset() {
@@ -60,6 +63,7 @@ class Display {
         this._cursor = 0;
         this.showCursor();
         this.print();
+        this._display_on = true;
     }
     showCursor() {
         for(let item of this._css_display) {
@@ -68,46 +72,71 @@ class Display {
         if(this._cursor < 8)
         this._css_display[this._cursor].classList.add('cursor');
     }
-    moveCursorLeft() {
-        if (this._cursor > 0 && this._cursor <= 8)
-            --this._cursor;
-        else if(this._window_start > 0 && this._window_start + this._cursor <= this._display.length - 1) {
-            --this._window_start;
+    moveCursorLeft() { 
+        if(this._display_on) {
+            if (this._cursor > 0 && this._cursor <= 8)
+                --this._cursor;
+            else if(this._window_start > 0 && this._window_start + this._cursor <= this._display.length - 1) {
+                --this._window_start;
+            }
+            this.print();
+            this.showCursor();
         }
-        this.print();
-        this.showCursor();
     }
     moveCursorRight() {
-        if (this._cursor >= 0 && this._cursor < 8)
-            ++this._cursor;
-        else if (this._window_start >= 0 && this._window_start + this._cursor < this._display.length - 1) {
-            ++this._window_start;
+        if(this._display_on) {
+            if (this._cursor >= 0 && this._cursor < 8)
+                ++this._cursor;
+            else if (this._window_start >= 0 && this._window_start + this._cursor < this._display.length - 1) {
+                ++this._window_start;
+            }
+            this.print();
+            this.showCursor();
         }
-        this.print();
-        this.showCursor();
     }
     insertString(input) {
-        let insert_pos = this._window_start + this._cursor;
-        let to_concat = input.split('');
-        if(insert_pos >= this._display.length) {
-            this._display = this._display.concat(to_concat);
-        } else {
-            this._display.splice(insert_pos, 0, ...to_concat);
-            for(let i = 0; i < to_concat.length; ++i) {
-                this.moveCursorRight();
+        if(this._display_on) {
+            let insert_pos = this._window_start + this._cursor;
+            let to_concat = input.split('');
+            if(insert_pos > this._display.length) {
+                this._display = this._display.concat(to_concat);
+            } else {
+                this._display.splice(insert_pos, 0, ...to_concat);
+                for(let i = 0; i < to_concat.length; ++i) {
+                    this.moveCursorRight();
+                }
             }
+            this.print();            
         }
-        this.print();
     }
-
+    deleteCharacter() {
+        let insert_pos = this._window_start + this._cursor;
+        if(insert_pos >= 1 && insert_pos < this._display.length ||
+            insert_pos >= 0 && insert_pos < this._display.length && this._display.length == 1) {
+            this._display.splice(insert_pos - 1, 1);
+            this.moveCursorLeft();
+        }
+        this.print();   
+    }
+    turnDisplayOff(){
+        this.reset();
+        this._display_on = false;
+    };
+    turnDisplayOn(){
+        this._display_on = true;
+        this.reset();
+    };
  }
  //Add eventlisteners to all buttons.
 let display_obj = new Display();
 let printfunc = function(e) {
     display_obj.insertString(e.target.textContent);
 }
-let delfunc = function(e) {
+let printfuncNeg = function(e) {
     display_obj.insertString(e.target.textContent);
+}
+let delfunc = function(e) {
+    display_obj.deleteCharacter();
 }
 let moveleftfunc = function(e) {
     display_obj.moveCursorLeft();
@@ -118,8 +147,8 @@ let moverightfunc = function(e) {
 let resetfunc = function(e) {
     display_obj.reset();
 }
-let evalfunc = function(e) {
-    console.log('wow');
+let evalArith = function(input_str) {
+
 }
 
 const keyboard_hardcoded_functionality =
@@ -128,12 +157,11 @@ const keyboard_hardcoded_functionality =
  [10, printfunc], [11, printfunc], [12, printfunc],  [13, printfunc],  [14, printfunc],
  [15, printfunc], [16, printfunc], [17, printfunc],  [18, printfunc],  [19, printfunc],
  [20, printfunc], [21, printfunc], [22, printfunc],  [23, printfunc],  [24, printfunc],
- [25, printfunc], [26, printfunc], [27, printfunc],  [28, resetfunc],  [29, evalfunc]]);
+ [25, printfunc], [26, printfunc], [27, resetfunc],  [28, printfunc],  [29, printfunc]]);
 let to_wire = document.querySelectorAll('.keyboarddigit');
 let j = 0;
 for(let node of to_wire) {
     node.addEventListener('click', keyboard_hardcoded_functionality.get(j));
     ++j;
 }
-
 display_obj.insertString('123');
