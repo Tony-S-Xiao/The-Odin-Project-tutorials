@@ -38,6 +38,7 @@ body {
     font-size: 100px;
     color:white;
     vertical-align: top;
+    line-height: calc(100% - 3px - 3px);
 }
 #keyboard {
     width: calc(100% - 12px - 12px);
@@ -63,7 +64,7 @@ body {
     border-radius: 10px;
     font-family: monospace;
     font-size: 300%;
-    vertical-align: middle;
+    vertical-align: top;
     text-align: center;
     color:white;
     display:inline-block;

@@ -57,24 +57,83 @@ class Display {
     reset() {
         this._display = new Array();
         this._window_start = 0;
-        print();
+        this._cursor = 0;
+        this.showCursor();
+        this.print();
     }
-    toggleCursor() {
-        this._css_display[this._cursor].classList.toggle('cursor');
+    showCursor() {
+        for(let item of this._css_display) {
+            item.classList.remove('cursor');
+        }
+        if(this._cursor < 8)
+        this._css_display[this._cursor].classList.add('cursor');
     }
     moveCursorLeft() {
-        if(this._cursor < 8)
-        --this._cursor;
+        if (this._cursor > 0 && this._cursor <= 8)
+            --this._cursor;
+        else if(this._window_start > 0 && this._window_start + this._cursor <= this._display.length - 1) {
+            --this._window_start;
+        }
+        this.print();
+        this.showCursor();
     }
     moveCursorRight() {
-        if(this._cursor >= 0)
-        ++this._cursor;
+        if (this._cursor >= 0 && this._cursor < 8)
+            ++this._cursor;
+        else if (this._window_start >= 0 && this._window_start + this._cursor < this._display.length - 1) {
+            ++this._window_start;
+        }
+        this.print();
+        this.showCursor();
     }
+    insertString(input) {
+        let insert_pos = this._window_start + this._cursor;
+        let to_concat = input.split('');
+        if(insert_pos >= this._display.length) {
+            this._display = this._display.concat(to_concat);
+        } else {
+            this._display.splice(insert_pos, 0, ...to_concat);
+            for(let i = 0; i < to_concat.length; ++i) {
+                this.moveCursorRight();
+            }
+        }
+        this.print();
+    }
+
  }
-
+ //Add eventlisteners to all buttons.
 let display_obj = new Display();
-display_obj._display = ['a','b','c'];
-display_obj.print();
-display_obj.moveCursorRight();
-display_obj.toggleCursor();
+let printfunc = function(e) {
+    display_obj.insertString(e.target.textContent);
+}
+let delfunc = function(e) {
+    display_obj.insertString(e.target.textContent);
+}
+let moveleftfunc = function(e) {
+    display_obj.moveCursorLeft();
+}
+let moverightfunc = function(e) {
+    display_obj.moveCursorRight();
+}
+let resetfunc = function(e) {
+    display_obj.reset();
+}
+let evalfunc = function(e) {
+    console.log('wow');
+}
 
+const keyboard_hardcoded_functionality =
+ new Map([[0, delfunc], [1, moveleftfunc], [2, moverightfunc],  [3, printfunc],  [4, printfunc],
+ [5, printfunc], [6, printfunc], [7, printfunc],  [8, printfunc],  [9, printfunc],
+ [10, printfunc], [11, printfunc], [12, printfunc],  [13, printfunc],  [14, printfunc],
+ [15, printfunc], [16, printfunc], [17, printfunc],  [18, printfunc],  [19, printfunc],
+ [20, printfunc], [21, printfunc], [22, printfunc],  [23, printfunc],  [24, printfunc],
+ [25, printfunc], [26, printfunc], [27, printfunc],  [28, resetfunc],  [29, evalfunc]]);
+let to_wire = document.querySelectorAll('.keyboarddigit');
+let j = 0;
+for(let node of to_wire) {
+    node.addEventListener('click', keyboard_hardcoded_functionality.get(j));
+    ++j;
+}
+
+display_obj.insertString('123');
