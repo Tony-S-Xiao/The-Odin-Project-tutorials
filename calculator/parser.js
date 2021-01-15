@@ -50,3 +50,8 @@ function lex(input_str) {
     }
     return token_arr_out;
 }
+function parse(token_arr) {
+    if(token_arr === undefined)
+    return undefined;
+    
+}
