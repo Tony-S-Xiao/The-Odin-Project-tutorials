@@ -1,3 +1,4 @@
+
 // Initialize the keyboard.
 let keyboard = document.querySelector('#keyboard');
 let keyboard_digit = document.createElement('button');
@@ -20,8 +21,8 @@ const keyboard_hardcoded_text =
  new Map([[0, 'DEL'], [1, '🠔'], [2, '🠖'],  [3, 'LN'],  [4, 'LOG'],
  [5, '\u03C0'], [6, 'e'], [7, 'SIN'],  [8, 'COS'],  [9, 'TAN'],
  [10, '7'], [11, '8'], [12, '9'],  [13, '('],  [14, ')'],
- [15, '4'], [16, '5'], [17, '6'],  [18, '\u00D7'],  [19, '\u00F7'],
- [20, '1'], [21, '2'], [22, '3'],  [23, '\u002B'],  [24, '-'],
+ [15, '4'], [16, '5'], [17, '6'],  [18, '×'],  [19, '÷'],
+ [20, '1'], [21, '2'], [22, '3'],  [23, '+'],  [24, '-'],
  [25, '0'], [26, '.'], [27, 'C'],  [28, '^'],  [29, '=']]);
 let to_populate = document.querySelectorAll('.keyboarddigit');
 let i = 0;
@@ -61,9 +62,9 @@ class Display {
         this._display = new Array();
         this._window_start = 0;
         this._cursor = 0;
+        this._display_on = true;
         this.showCursor();
         this.print();
-        this._display_on = true;
     }
     showCursor() {
         for(let item of this._css_display) {
@@ -126,6 +127,12 @@ class Display {
         this._display_on = true;
         this.reset();
     };
+    printErr() {
+        this.reset();
+        this._display = 'ERROR.'
+        this.print();
+        this._display_on = false;
+    }
  }
  //Add eventlisteners to all buttons.
 let display_obj = new Display();
@@ -147,17 +154,27 @@ let moverightfunc = function(e) {
 let resetfunc = function(e) {
     display_obj.reset();
 }
-let evalArith = function(input_str) {
-
+let simpleEvalArith = function(input_str) {
+    let arr = input_str.split('()-.^×÷+');
+    if(arr.length != 2) {
+        display.printErr();
+    }
+    
 }
+// const token_list = new Set(['LN', 'LOG', '\u03C0', 'e', 'SIN', 'COS', 'TAN',
+//  '7', '8', '9', '1', '2', '3', '4', '5', '6', '0',
+// '(', ')', '×', '÷', '+', '-', '.', '^' ]);
+// function tokenize(input_str) {
+//  let arr = input_str.split('()-.^×÷+');
 
+// }
 const keyboard_hardcoded_functionality =
  new Map([[0, delfunc], [1, moveleftfunc], [2, moverightfunc],  [3, printfunc],  [4, printfunc],
  [5, printfunc], [6, printfunc], [7, printfunc],  [8, printfunc],  [9, printfunc],
  [10, printfunc], [11, printfunc], [12, printfunc],  [13, printfunc],  [14, printfunc],
  [15, printfunc], [16, printfunc], [17, printfunc],  [18, printfunc],  [19, printfunc],
  [20, printfunc], [21, printfunc], [22, printfunc],  [23, printfunc],  [24, printfunc],
- [25, printfunc], [26, printfunc], [27, resetfunc],  [28, printfunc],  [29, printfunc]]);
+ [25, printfunc], [26, printfunc], [27, resetfunc],  [28, printfunc],  [29, simpleEvalArith]]);
 let to_wire = document.querySelectorAll('.keyboarddigit');
 let j = 0;
 for(let node of to_wire) {
@@ -165,3 +182,4 @@ for(let node of to_wire) {
     ++j;
 }
 display_obj.insertString('123');
+let to_check = lex('SINSINSISINN(100+231.22×4)×(1-2)');
