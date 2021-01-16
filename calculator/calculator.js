@@ -154,11 +154,8 @@ let moverightfunc = function(e) {
 let resetfunc = function(e) {
     display_obj.reset();
 }
-let simpleEvalArith = function(input_str) {
-    let arr = input_str.split('()-.^×÷+');
-    if(arr.length != 2) {
-        display.printErr();
-    }
+let simpleEvalArith = function(e) {
+    
     
 }
 // const token_list = new Set(['LN', 'LOG', '\u03C0', 'e', 'SIN', 'COS', 'TAN',
