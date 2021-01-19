@@ -48,14 +48,65 @@ function lex(input_str) {
             }
         }
     }
+    if(curr_val.length > 0)
+        token_arr_out.push(new Token(curr_val, 'T_NUM'));
+    token_arr_out.push(new Token(null, 'T_END'));
     return token_arr_out;
 }
 /*
-The parser simply evalutes the statement from the bottom up
+Simplest grammar first
+returns a parse tree.
 
+add ::= mul add'
+add' ::= END | "+" mul | "-" mul 
+
+mul ::= END | term mul' 
+mul' ::= "*" term mul' | "/" term mul'
+
+term ::= <num> | "(" add ")"
 */
+
+
 function parse(token_arr) {
     if(token_arr === undefined)
-    return undefined;
-    
+    return undefined; 
+    let i = 0;
+    let root = add();
+    function add() {
+        let curr = {type: "add", left: null, middle: null, right: null};
+        let curr_mul = mul(token_arr);
+        let curr_add_p = add_p(token_arr);
+        if(curr_add_p != null) {
+            curr.middle = curr_add_p[0];
+            curr.right = curr_add_p[1];
+        }
+        curr.left = curr_mul;
+        return curr;
+    }
+    function add_p() {
+        if(token_arr[i]._token_type == 'T_END')
+        return null;
+        else if(token_arr[i]._token_type == 'T_OP') {
+            ++i;
+            return [token_arr[i]._val, mul()];
+        }
+        return null;
+    }
+    function mul() {
+        if(token_arr[i]._token_type == 'T_END')
+        return null;
+        let curr = {type: "mul", left: null, middle: null, right: null};
+        let curr_term = term();
+        let curr_mull_p = mul_p();
+        curr.left = curr_term;
+        curr.middle = curr_mull_p[0];
+        curr.right = curr_mull_p[1];
+        return curr;
+    }
+    function mul_p() {
+
+    }
+    function term() {
+
+    }   
 }
