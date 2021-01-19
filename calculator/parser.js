@@ -50,6 +50,10 @@ function lex(input_str) {
     }
     return token_arr_out;
 }
+/*
+The parser simply evalutes the statement from the bottom up
+
+*/
 function parse(token_arr) {
     if(token_arr === undefined)
     return undefined;

@@ -112,7 +112,7 @@ class Display {
     }
     deleteCharacter() {
         let insert_pos = this._window_start + this._cursor;
-        if(insert_pos >= 1 && insert_pos < this._display.length ||
+        if(insert_pos >= 1 && insert_pos <= this._display.length ||
             insert_pos >= 0 && insert_pos < this._display.length && this._display.length == 1) {
             this._display.splice(insert_pos - 1, 1);
             this.moveCursorLeft();
@@ -155,8 +155,8 @@ let resetfunc = function(e) {
     display_obj.reset();
 }
 let simpleEvalArith = function(e) {
-    
-    
+    display_obj._display = lex(display_obj._display.join(''));
+    display_obj.print();
 }
 // const token_list = new Set(['LN', 'LOG', '\u03C0', 'e', 'SIN', 'COS', 'TAN',
 //  '7', '8', '9', '1', '2', '3', '4', '5', '6', '0',
