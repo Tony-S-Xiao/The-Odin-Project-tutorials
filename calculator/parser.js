@@ -54,59 +54,69 @@ function lex(input_str) {
     return token_arr_out;
 }
 /*
-Simplest grammar first
-returns a parse tree.
+Returns a n-ary parse tree.
 
 add ::= mul add'
-add' ::= END | "+" mul | "-" mul 
+add' ::= END | "+" mul add' | "-" mul add'
 
-mul ::= END | term mul' 
-mul' ::= "*" term mul' | "/" term mul'
+mul ::=  term mul'
+mul' ::= END | "*" term mul' | "/" term mul'
 
 term ::= <num> | "(" add ")"
 */
-
-
 function parse(token_arr) {
     if(token_arr === undefined)
-    return undefined; 
+    return null; 
     let i = 0;
-    let root = add();
-    function add() {
-        let curr = {type: "add", left: null, middle: null, right: null};
-        let curr_mul = mul(token_arr);
-        let curr_add_p = add_p(token_arr);
-        if(curr_add_p != null) {
-            curr.middle = curr_add_p[0];
-            curr.right = curr_add_p[1];
-        }
-        curr.left = curr_mul;
-        return curr;
-    }
-    function add_p() {
-        if(token_arr[i]._token_type == 'T_END')
-        return null;
-        else if(token_arr[i]._token_type == 'T_OP') {
+    function term() {
+        if(token_arr[i]._token_type == 'T_NUM') {
+            let curr_node = {type: 'term', val: +token_arr[i]._val};
             ++i;
-            return [token_arr[i]._val, mul()];
+            return curr_node;
         }
         return null;
-    }
-    function mul() {
-        if(token_arr[i]._token_type == 'T_END')
-        return null;
-        let curr = {type: "mul", left: null, middle: null, right: null};
-        let curr_term = term();
-        let curr_mull_p = mul_p();
-        curr.left = curr_term;
-        curr.middle = curr_mull_p[0];
-        curr.right = curr_mull_p[1];
-        return curr;
     }
     function mul_p() {
-
+        let curr_node = {type:'mul_p', op_arr: null, term_arr: null};
+        let op_arr = new Array();
+        let term_arr = new Array();
+        while(token_arr[i]._token_type == 'T_OP' && (token_arr[i]._val == '×' || token_arr[i]._val == '÷')) {
+            op_arr.push(token_arr[i]._val);
+            ++i;
+            let curr_term = term();
+            if(curr_term === null) return null;
+            term_arr.push(curr_term);
+        }
+        curr_node.op_arr = op_arr;
+        curr_node.term_arr = term_arr;
+        return curr_node;
     }
-    function term() {
-
-    }   
+    function mul() {
+        let curr_left = term();
+        let curr_right = mul_p();
+        if(curr_left === null || curr_right === null)
+            return null;
+        return {type:'mul', left: curr_left, right: curr_right};
+    }
+    // Returns a 
+    function add_p() {
+            let curr_node = {type:'add_p', op_arr: null, mul_arr: null};
+            let op_arr = new Array();
+            let mul_arr = new Array();
+            while(token_arr[i]._token_type == 'T_OP' && (token_arr[i]._val == '+' || token_arr[i]._val == '-')) {
+                op_arr.push(token_arr[i]._val);
+                ++i;
+                let curr_mul = mul();
+                if(curr_mul === null) return null;
+                mul_arr.push(curr_mul);
+            }
+            curr_node.op_arr = op_arr;
+            curr_node.mul_arr = mul_arr;
+            return curr_node;
+        }
+    // Returns a binary tree node.
+    function add() {
+        return {type: 'add', left: mul(), right: add_p()};
+    }
+    return add();
 }
