@@ -36,6 +36,7 @@ section {
     width: calc(100% - var(--nav-width));
     height: 100%;
     background-color:red;
+    overflow: auto;
 }
 .book-card {
     width: 250px;
