@@ -1,5 +1,5 @@
 class Book {
-    constructor(title, author, pages, finished) {
+    constructor(title = '', author = '', pages = 0, finished = false) {
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -11,10 +11,16 @@ class Book {
     }
 }
 class Library {
-    constructor() {
+    constructor(JSON_object = null) {
         this._shelf = [];
         this._catalogue = new Set();
         this._length = 0;
+        if(JSON_object != null)
+        {
+            this.fromJSONObject(JSON_object);
+            return;
+        }
+
     }
     insert(book) {
         if (this._catalogue.has(book.title)) {
@@ -34,6 +40,13 @@ class Library {
         this._catalogue.delete(erased_book[0].title);
         --this._length;
     }
+    find(title) {
+        if (!this._catalogue.has(title)) {
+            window.alert('There is no book with that name!');
+            return;
+        }
+        return this._shelf.find(element=>element.title == title);
+    }
     [Symbol.iterator] = function() {
         return {
             shelf: this._shelf,
@@ -44,6 +57,13 @@ class Library {
                 else 
                 return {done: true, value: this.shelf[this.idx++]};
             }
+        }
+    }
+    fromJSONObject(JSON_object) {
+        this._shelf = JSON_object._shelf;
+        for(let book of this._shelf) {
+            this._catalogue.add(book.title);
+            this._length++;
         }
     }
 }
@@ -58,10 +78,20 @@ class Display {
             library.erase(e.target.parentNode.childNodes[0].textContent);
             e.target.parentNode.remove();
         });
+        let read = document.createElement('button');
+        read.textContent = 'toggle read';
+        read.addEventListener('click', (e)=> {
+            library.find(e.target.parentNode.childNodes[0].textContent).finished = !library.find(e.target.parentNode.childNodes[0].textContent).finished;
+        });
         for(let book of library) {
             card_node.textContent = book.title;
             display_section.appendChild(card_node);
             card_node.appendChild(remove_button);
+            card_node.appendChild(read);
+            read = read.cloneNode(true);
+            read.addEventListener('click', (e)=> {
+            library.find(e.target.parentNode.childNodes[0].textContent).finished = !library.find(e.target.parentNode.childNodes[0].textContent).finished;
+        });
             remove_button = remove_button.cloneNode(true);
             remove_button.addEventListener('click', (e)=> {
                 library.erase(e.target.parentNode.childNodes[0].textContent);
@@ -78,7 +108,6 @@ class Display {
     }
 }
 
-let library1 = new Library();
 function addToLibrary() {
     let title = window.prompt('What book did you read?');
     if(title === null) return;
@@ -99,10 +128,15 @@ function addToLibrary() {
         finished = true;
     else
         finished = false;
-        library1.insert(new Book(title, author, pages, finished));
+        session_library.insert(new Book(title, author, pages, finished));
 }
+let session_library = new Library(JSON.parse(localStorage.getItem('session_library')));
+Display.display(session_library);
+window.addEventListener('beforeunload', (e)=>{
+    localStorage.setItem('session_library', JSON.stringify(session_library));
+});
 document.querySelector('#new-book').addEventListener('click', (e)=> {
     addToLibrary();
     Display.reset();
-    Display.display(library1);
+    Display.display(session_library);
 });
