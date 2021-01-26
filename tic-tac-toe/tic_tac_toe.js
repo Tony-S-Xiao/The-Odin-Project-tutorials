@@ -1,7 +1,9 @@
+const BOARD_SIZE = 3;
+
 const board = (() => {
     let board = [];
     const initialize = () => {
-        for(let i = 0; i < 3; ++i) {
+        for(let i = 0; i < BOARD_SIZE; ++i) {
             board.push(['<br>','<br>','<br>']);
         }
     }
@@ -14,10 +16,27 @@ const board = (() => {
     }
     const placeSquare = (row, column, player = true) => {
         board[row][column] = player==true ? 'x' : 'o';
+        display.print();
         return gameover();
     }
     const gameover = () => {
-        return checkHorizontal() || checkVertical() || checkDiagonal();
+        if(checkHorizontal() || checkVertical() || checkDiagonal() || isTie()) {
+            //should alert after repaint
+            requestAnimationFrame(()=>{
+                requestAnimationFrame(()=>{window.alert('game over!')})
+            });
+        return true;            
+        }
+    return false;
+    }
+    const isTie = () => {
+        for(let arr of board) {
+            for(let cell of arr) {
+                if(cell == '<br>')
+                return false;
+            }
+        }
+        return true;
     }
     const checkHorizontal = () => {
         for(let i = 0; i < board.length; ++i) {
@@ -55,11 +74,11 @@ const display = (() => {
     const visual_board = document.querySelector('main');
     const document_nodes = new Map();
     const initialize = () => {
-        for(let i = 0; i < 3; ++i) {
+        for(let i = 0; i < BOARD_SIZE; ++i) {
             let row = document.createElement('div');
             row.classList = 'row';
             visual_board.appendChild(row);
-            for(let j = 0; j < 3; ++j) {
+            for(let j = 0; j < BOARD_SIZE; ++j) {
                 let column = document.createElement('div');
                 column.classList = 'column';
                 row.appendChild(column);
@@ -77,8 +96,8 @@ const display = (() => {
         print();
     }
     const print = () => {
-        for(let i = 0; i < 3; ++i) {
-            for(let j = 0; j < 3; ++j) {
+        for(let i = 0; i < BOARD_SIZE; ++i) {
+            for(let j = 0; j < BOARD_SIZE; ++j) {
                 let node = document_nodes.get(`${i},${j}`);
                 if(board.getSquare(i, j) != ' ') {
                     node.textContent = board.getSquare(i, j);
@@ -90,7 +109,26 @@ const display = (() => {
     }
     return {reset, initialize, print};
 })();
-board.reset();
-display.reset();
-board.placeSquare(0,0, true);
-display.print();
+let controller = (() => {
+    let turn_order = true;
+    //initialize buttons
+    board.reset();
+    display.reset();
+    display.print();
+    //initialize reset
+    document.querySelector('.reset').addEventListener('click', (event)=>{
+        board.reset();
+        display.print();
+    });
+    //initialize board click
+    let columns = document.querySelectorAll('.column');
+    for(let i = 0; i < columns.length; ++i) {
+        console.log(i + " " + i % BOARD_SIZE + " " + Math.floor(i/BOARD_SIZE));
+        columns[i].addEventListener('click', (e)=>{
+            board.placeSquare(Math.floor(i/BOARD_SIZE), i % BOARD_SIZE, turn_order);
+            turn_order = !turn_order;
+        });
+    }
+
+})();
+
