@@ -1,4 +1,64 @@
-html {
+* {
     margin: 0px;
     padding: 0px;
+    box-sizing: border-box;
+}
+html {
+    width: 100%;
+    height: 100%;
+}
+body{
+    width: 100%;
+    height: 100%;
+
+}
+#content {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height:100%;
+}
+#tab-panel {
+    height:100%;
+    width: 10em;
+    background-color: grey;
+    float:left;
+    padding: 10px 0px 0px 0px;
+}
+.tab {
+    list-style:none ;
+    margin: 0px 10px 10px 10px;
+    user-select: none;
+}
+.tab:hover {
+    background-color: lightgreen;
+    border-style: solid;
+    border-width: 0px 10px 10px 10px;
+    border-color: lightgreen;
+    margin: 0px;
+}
+.content-panel {
+    height:100%;
+    width: 100%;
+    background-color: green;
+}
+.food-card {
+    height: 400px;
+    width: calc(400px*1.61);
+    display: inline-block;
+    padding: 10px;
+}
+.food-card-picture {
+    height: 66%;
+    width: 100%;
+    background-color: yellow;
+}
+.food-card-description {
+    height: 34%;
+    width: 100%;
+    background-color: lightgreen;
+}
+img {
+    height: 100%;
+    width: 100%;
 }
