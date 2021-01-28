@@ -1,3 +1,5 @@
+import _ from 'lodash';
+
 let tab_creator = (() => {
     const createTab = (textContent) => {
         const tab_panel = document.querySelector('#tab-panel');
@@ -7,7 +9,10 @@ let tab_creator = (() => {
         tab.id = textContent;
         tab_panel.appendChild(tab);
     };
-    return {createTab};
+    const deleteTab = (textContent) => {
+        document.querySelector(`.tab, #${textContent}`).remove();
+    };
+    return {createTab, deleteTab};
 })();
 
 export default tab_creator;
