@@ -32,7 +32,10 @@ let panel_manager = (()=>{
             document.getElementById(id).style.display = 'none';
         }
     };
-    return {createAssociatedPanel, deletePanel, hidePanel, showPanel, getAssociatedPanelId, getPanel, hideAllPanels};
+    const addCardToPanel = (card, panel_id) => {
+        document.getElementById(panel_id).appendChild(card);
+    };
+    return {createAssociatedPanel, deletePanel, hidePanel, showPanel, getAssociatedPanelId, getPanel, hideAllPanels, addCardToPanel};
 })();
 
 export default panel_manager;

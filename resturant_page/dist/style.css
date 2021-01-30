@@ -24,6 +24,7 @@ body{
     background-color: grey;
     float:left;
     padding: 10px 0px 0px 0px;
+    display:inline-block;
 }
 .tab {
     list-style:none ;
@@ -39,8 +40,9 @@ body{
 }
 .content-panel {
     height:100%;
-    width: 100%;
+    width: calc(100% - 10em);
     background-color: green;
+    display:inline-block;
 }
 .food-card {
     height: 400px;
