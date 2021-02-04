@@ -1,0 +1,1 @@
+document.getElementById("menu").addEventListener("click",(e=>{let l=e.target.classList;console.log(l),0==l.length||"collapse"==l.value?l.value="expand":l.value="collapse"}));

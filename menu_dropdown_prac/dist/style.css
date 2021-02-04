@@ -1,0 +1,44 @@
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    width: 100%;
+}
+#menu {
+    position: fixed;
+    left: 10px;
+    top: 10px;
+}
+.expand {
+    background-color: grey;
+    animation-name: menue;
+    animation-duration: 0.5s;
+    height: 600px;
+    width: 300px;
+}
+.collapse {
+    background-color: grey;
+    animation-name: menuc;
+    animation-duration: 0.5s;
+    height: 40px;
+    width: 40px;
+}
+@keyframes menue {
+    from{    height: 40px;
+        width: 40px;}
+        to{
+            height: 600px;
+            width: 300px;
+        }
+}
+@keyframes menuc {
+    from{    height: 600px;
+        width: 300px;}
+        to{
+            height: 40px;
+            width: 40px;
+        }
+}
