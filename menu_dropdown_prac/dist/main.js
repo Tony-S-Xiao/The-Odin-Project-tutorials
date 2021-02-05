@@ -1,1 +1,1 @@
-document.getElementById("menu").addEventListener("click",(e=>{let l=e.target.classList;console.log(l),0==l.length||"collapse"==l.value?l.value="expand":l.value="collapse"}));
+document.getElementById("menu").addEventListener("click",(e=>{let l=document.getElementById("menu"),s=l.classList;0==s.length||"collapse"==s.value?s.value="expand":s.value="collapse";let n=l.querySelectorAll(".menu-item, .menu-expand, .menu-collapse");for(let e of n)console.log(e.classList),"menu-expand"==e.classList?e.classList.value="menu-collapse":e.classList.value="menu-expand"}));

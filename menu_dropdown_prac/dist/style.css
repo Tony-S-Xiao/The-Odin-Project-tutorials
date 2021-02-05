@@ -42,3 +42,37 @@ html, body {
             width: 40px;
         }
 }
+.menu-item {
+    display:none;
+}
+.menu-expand {
+    margin:10px 0px 10px 0px;
+    padding:5px;
+    background-color: burlywood;
+    animation-name: m-e;
+    animation-delay: 0.5s;
+    animation-duration: 0.5s;
+}
+.menu-collapse {
+    margin:10px 0px 10px 0px;
+    padding:5px;
+    background-color: burlywood;
+    animation-name: m-c;
+    animation-delay: 0.5s;
+    animation-duration: 0.5s;
+}
+@keyframes m-e {
+    from{    display:none;
+        }
+        to{
+            width:100%;
+        }
+}
+@keyframes m-c {
+    from{    height: 600px;
+        width: 300px;}
+        to{
+            height: 40px;
+            width: 40px;
+        }
+}
