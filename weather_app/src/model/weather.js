@@ -1,4 +1,4 @@
-import api_key from 'keys.js'
+import api_key from './key.js'
 const getCurrWeather = (city) => {
         return new Promise((resolve, reject)=>{
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`)
