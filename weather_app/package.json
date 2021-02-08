@@ -1,0 +1,15 @@
+{
+  "name": "weather_app",
+  "version": "1.0.0",
+  "description": "weather api prac",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "tony xiao",
+  "license": "ISC",
+  "devDependencies": {
+    "webpack": "^5.21.1",
+    "webpack-cli": "^4.5.0"
+  }
+}
