@@ -1,7 +1,7 @@
-const api_key = '72f040111dbe75bc6ac7d4510cfe60fa';
+import api_key from 'keys.js'
 const getCurrWeather = (city) => {
         return new Promise((resolve, reject)=>{
-        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`, {mode:'cors'})
+        fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${api_key}&units=metric`)
         .then((response)=>{
             return response.json();
         })
