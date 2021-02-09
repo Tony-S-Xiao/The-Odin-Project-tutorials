@@ -35,7 +35,15 @@ class PrefixTree {
         }
     }
     getTop10Suggestion(prefix) {
-
+        let curr_node = this._root;
+        for(let i = 0; i < prefix.length; ++i) {
+            if(curr_node.pointers.has(word[i])) {
+                curr_node = curr_node.pointers.get(word[i]);
+            } else {
+                return [];
+            }
+        }
+        
     }
 }
 class Node {
