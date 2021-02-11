@@ -15,7 +15,7 @@ class App extends React.Component {
     let new_task = document.querySelector('input');
     this.setState({
       task_arr : this.state.task_arr.concat([new_task.value]),
-      count: this.count + 1
+      count: this.state.count + 1
     })
     new_task.value = "";
   }

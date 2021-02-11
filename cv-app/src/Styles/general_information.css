@@ -1,0 +1,10 @@
+.large-field {
+    width: 100px;
+    height: 30px;
+    border:none;
+    background-color: inherit;
+    font-size: 20px;
+}
+.large-field:focus{
+    background-color: lightsteelblue;
+}
