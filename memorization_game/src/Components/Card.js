@@ -10,7 +10,7 @@ export default class Card extends React.Component {
     }
     render() {
         return (
-            <div className="container" onClick={this.props.onClick}>
+            <div className="container" onClick={this.props.onClick} id={this.props.id}>
                 <img src={this.props.url} alt="oops"></img>
                 <div className="title">
                 {this.props.title}
