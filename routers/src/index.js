@@ -11,5 +11,3 @@ let change = () => {
     </React.StrictMode>,
     document.getElementById("root")
   );
-
-
