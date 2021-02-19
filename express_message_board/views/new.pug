@@ -1,0 +1,8 @@
+extends layout
+
+block content
+    title=title
+    form(method='POST', action='/new', name='message')
+        label(for="message") wow
+            input(type='text', name='message', id='message')
+            input(type='submit', value='Submit')

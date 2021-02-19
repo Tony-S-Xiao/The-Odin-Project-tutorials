@@ -3,19 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var key = require('./keys.js');
-const db_url = `mongodb+srv://tony:${key}@cluster0.kuo2e.mongodb.net/local_library?retryWrites=true&w=majority`;
-console.log(db_url);
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
-//Set up mongoose connection
-var mongoose = require('mongoose');
-var mongoDB = db_url;
-mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
-var db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
